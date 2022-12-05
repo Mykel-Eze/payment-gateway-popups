@@ -173,8 +173,61 @@ img {
     max-width: 100%;
 }
 #root .container {
-    width: 100%;
+    width: 90%;
 }
+
+/*---=== App Page Styles===---*/
+.view-height {
+    height: 100vh;
+}
+.main-boxes-wrapper {
+    position: relative;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+h1.mbw-title {
+    text-align: center;
+    font-size: 50px;
+    font-family: var(--font-bold);
+    margin-top: 0;
+    margin-bottom: 80px;
+}
+.popup-trigger-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+.popup-trigger-block {
+    /* border: 1px solid #353D46; */
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--pry-color);
+    color: white;
+    transition: transform 1.5s;
+}
+.popup-trigger-block:hover {
+    transform: scale(1.1);
+}
+.modal-trigger {
+    cursor: pointer;
+}
+
+@media(max-width: 992px) {
+    .popup-trigger-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media(max-width: 600px) {
+    .popup-trigger-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    h1.mbw-title {
+        font-size: 38px;
+    }
+}
+/*---=== end of App Page Styles ===---*/
 
 @media(min-width: 993px) {
     #root .container {
