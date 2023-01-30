@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-escape */
-import { Button, RightArrow,SubmitButtonWrapper } from "./styled/Button.styled";
-import { Form, GridField } from "./styled/Form.styled";
-import { CheckboxField, InputField } from "./utils/InputField";
-import ModalWrapper from "./utils/ModalWrapper";
+import { Button, RightArrow, ButtonWrapper } from "../styled/Button.styled";
+import { Form, GridField } from "../styled/Form.styled";
+import { CheckboxField, InputField } from "../utils/InputField";
+import ModalWrapper from "../utils/ModalWrapper";
 
 const EnterCardDetails = () => {
     return (
@@ -38,12 +38,12 @@ const EnterCardDetails = () => {
                     CheckboxLabel={"Remember this card next time"}
                 />
 
-                <SubmitButtonWrapper>
-                    <Button type="submit">
+                <ButtonWrapper>
+                    <Button type="button" className="modal-close modal-trigger" data-target="enter-card-pin">
                         Pay ₦35,000,000.09
-                        <RightArrow src={require("../images/right-arr.svg").default} />
+                        <RightArrow src={require("../../images/right-arr.svg").default} />
                     </Button>
-                </SubmitButtonWrapper>
+                </ButtonWrapper>
             </Form>
         </ModalWrapper>
     )

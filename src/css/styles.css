@@ -229,6 +229,10 @@ h1.mbw-title {
 }
 /*---=== end of App Page Styles ===---*/
 
+#transaction-completed .tranxn-amount {
+    display: none;
+}
+
 @media(min-width: 993px) {
     #root .container {
         width: 85%;

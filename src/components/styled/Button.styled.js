@@ -6,7 +6,7 @@ export const Button = styled.button `
     width: 100%;
     font-size: 18px;
     color: #ffffff;
-    background-color: var(--pry-color);
+    background-color: var(--pry-color) !important;
     border-radius: 32.5px;
     border: none;
     cursor: pointer;
@@ -18,14 +18,22 @@ export const Button = styled.button `
 
 
     &.default-btn {
-        background-color: #ffffff;
-        color: #353D46;
-        border: 1px solid rgba(119, 119, 119, 0.2);
+        background-color: #ffffff !important;
+        color: #353D46 !important;
+        border: 1px solid rgba(119, 119, 119, 0.2) !important;
     }
 `
 
-export const SubmitButtonWrapper = styled.div `
+export const ButtonWrapper = styled.div `
     margin: 40px 0 20px;
+
+    &.spaced {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
 `
 
 export const RightArrow = styled.img `

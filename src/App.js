@@ -5,7 +5,10 @@ import 'materialize-css/dist/css/materialize.min.css';
 import { useEffect } from 'react';
 import M from 'materialize-css';
 
-import EnterCardDetails from './components/EnterCardDetails';
+import EnterCardDetails from './components/CardComponents/EnterCardDetails';
+import EnterCardPin from './components/CardComponents/EnterCardPin';
+import TransactionCompleted from './components/TransactionCompleted';
+import TransactionNotCompleted from './components/TransactionNotCompleted';
 
 function App() {
 
@@ -40,6 +43,9 @@ function App() {
       </div>
 
       <EnterCardDetails />
+      <EnterCardPin />
+      <TransactionCompleted />
+      <TransactionNotCompleted />
     </div>
   );
 }
