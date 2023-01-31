@@ -23,7 +23,7 @@ const ChooseBankUssd = () => {
                     CheckboxLabel={"Remember this option next time"}
                 />
 
-                <ButtonWrapper id="top-bank-lists" className="spaced">
+                <ButtonWrapper className="top-bank-lists spaced">
                     <Button type="button" className="modal-close modal-trigger default-btn flex-div justify-content-btw" data-target="bank-ussd-details">
                         <span className="bank-name">Guaranty Trust Bank</span>
                         <span className="bank-code">*737#</span>
@@ -34,7 +34,7 @@ const ChooseBankUssd = () => {
                     </Button>
                 </ButtonWrapper>
 
-                <ButtonWrapper id="proceed-btn-wrapper" className="hidden">
+                <ButtonWrapper className="proceed-btn-wrapper hidden">
                     <Button type="button" className="modal-close modal-trigger" data-target="bank-ussd-details">
                         Proceed
                         <RightArrow src={require("../../images/right-arr.svg").default} />

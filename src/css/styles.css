@@ -195,7 +195,7 @@ h1.mbw-title {
 }
 .popup-trigger-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 20px;
 }
 .popup-trigger-block {

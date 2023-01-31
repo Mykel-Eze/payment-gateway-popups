@@ -37,41 +37,41 @@ const ModalWrapper = ({ id="", children, transferType}) => {
                 <ModalFooter>
                     <Container>
                         <TransferTypeWrapper>
-                            <TransferType className={ transferType === "transfer" ? "active" : ""}>
+                            <TransferType className={`modal-trigger modal-close ${transferType === 'transfer' ? 'active' : ''}`} data-target="">
                                 <div>
                                     <img src={require("../../images/transfer.svg").default} alt="transfer" className="default-img" />
                                     <img src={require("../../images/transfer-active.svg").default} alt="transfer" className="active-img" />
                                 </div>
                                 <div>Transfer</div>
                             </TransferType>
-                            <TransferType className={ transferType === "bank" ? "active" : ""}>
+                            <TransferType className={`modal-trigger modal-close ${transferType === 'bank' ? 'active' : ''}`} data-target="choose-bank">
                                 <div>
                                     <img src={require("../../images/bank.svg").default} alt="bank" className="default-img" />
                                     <img src={require("../../images/bank-active.svg").default} alt="bank" className="active-img" />
                                 </div>
                                 <div>Bank</div>
                             </TransferType>
-                            <TransferType className={ transferType === "card" ? "active" : ""}>
+                            <TransferType className={`modal-trigger modal-close ${transferType === 'card' ? 'active' : ''}`} data-target="enter-card-details">
                                 <div>
                                     <img src={require("../../images/card.svg").default} alt="card" className="default-img" />
                                     <img src={require("../../images/card-active.svg").default} alt="card" className="active-img" />
                                 </div>
                                 <div>Card</div>
                             </TransferType>
-                            <TransferType className={ transferType === "ussd" ? "active" : ""}>
+                            <TransferType className={`modal-trigger modal-close ${transferType === 'ussd' ? 'active' : ''}`} data-target="choose-bank-ussd">
                                 <div>
                                     <img src={require("../../images/ussd.svg").default} alt="ussd" className="default-img" />
                                     <img src={require("../../images/ussd-active.svg").default} alt="ussd" className="active-img" />
                                 </div>
                                 <div>USSD</div>
                             </TransferType>
-                            <TransferType className={ transferType === "qr" ? "active" : ""}>
+                            {/* <TransferType className={`modal-trigger modal-close ${transferType === 'qr' ? 'active' : ''}`} data-target="">
                                 <div>
                                     <img src={require("../../images/qr-code.svg").default} alt="qr-code" className="default-img" />
                                     <img src={require("../../images/qr-code-active.svg").default} alt="qr-code" className="active-img" />
                                 </div>
                                 <div>QR Code</div>
-                            </TransferType>
+                            </TransferType> */}
                         </TransferTypeWrapper>
                     </Container>
                 </ModalFooter>

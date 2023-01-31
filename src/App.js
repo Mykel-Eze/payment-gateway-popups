@@ -13,6 +13,7 @@ import TransactionNotCompleted from './components/TransactionNotCompleted';
 import ChooseBankUssd from './components/UssdComponents/ChooseBankUssd';
 import BankUssdDetails from './components/UssdComponents/BankUssdDetails';
 import Verifying from './components/Verifying';
+import ChooseBank from './components/BankComponents/ChooseBank';
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
             <div className="popup-trigger-block modal-trigger" data-target="">
               <h4 className="bold-txt">Transfer</h4>
             </div>
-            <div className="popup-trigger-block modal-trigger" data-target="">
+            <div className="popup-trigger-block modal-trigger" data-target="choose-bank">
               <h4 className="bold-txt">Bank</h4>
             </div>
             <div className="popup-trigger-block modal-trigger" data-target="enter-card-details">
@@ -39,9 +40,9 @@ function App() {
             <div className="popup-trigger-block modal-trigger" data-target="choose-bank-ussd">
               <h4 className="bold-txt">USSD</h4>
             </div>
-            <div className="popup-trigger-block modal-trigger" data-target="">
+            {/* <div className="popup-trigger-block modal-trigger" data-target="">
               <h4 className="bold-txt">QR Code</h4>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -55,6 +56,8 @@ function App() {
 
       <ChooseBankUssd />
       <BankUssdDetails />
+
+      <ChooseBank />
     </div>
   );
 }

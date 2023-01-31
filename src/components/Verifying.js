@@ -1,6 +1,4 @@
 /* eslint-disable no-useless-escape */
-import { useEffect } from 'react';
-import M from "materialize-css";
 import { Form } from "./styled/Form.styled";
 import ModalWrapper from "./utils/ModalWrapper";
 import { Loader, LoaderWrapper, Text } from './styled/Utils.styled';
@@ -8,7 +6,7 @@ import { Loader, LoaderWrapper, Text } from './styled/Utils.styled';
 const Verifying = () => {
 
     return (
-        <ModalWrapper id="verifying" transferType="card">
+        <ModalWrapper id="verifying">
             <Form>
                 <LoaderWrapper className='modal-trigger modal-close' data-target="transaction-completed">
                     <div className="center">

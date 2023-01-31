@@ -7,11 +7,24 @@ export const SelectBankField = ({ id ="", classname, label }) =>{
         M.FormSelect.init(elemSelect, {
             constrainWidth: true
         });
+
+        document.querySelector("select#banks").addEventListener('change', event => {
+            
+        })
     }, []);
+
+    function changeBankOptionButtons() {
+        document.querySelectorAll('.top-bank-lists').forEach(item => {
+            item.style.display = "none";
+        })
+        document.querySelectorAll('.proceed-btn-wrapper').forEach(item => {
+            item.style.display = "block";
+        })
+    }
     return(
         <div className="input-field select-field rel" >
-            <select id="banks" className="select" name="banks">
-                <option disabled defaultValue>Choose your Bank</option>
+            <select id="banks" className="select" name="banks" defaultValue={"default"} onChange={changeBankOptionButtons}>
+                <option disabled value={"default"}>Choose your Bank</option>
                 <option value="Guaranty Trust Bank">Guaranty Trust Bank</option>
                 <option value="United Bank for Africa">United Bank for Africa</option>
                 <option value="Union Bank">Union Bank</option>
