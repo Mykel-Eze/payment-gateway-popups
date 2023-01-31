@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-escape */
-import { useEffect } from "react";
 import { Button, ButtonWrapper, RightArrow } from "../styled/Button.styled";
 import { Form } from "../styled/Form.styled";
 import { CheckboxField } from "../utils/InputField";
@@ -7,17 +6,10 @@ import ModalWrapper from "../utils/ModalWrapper";
 import { SelectBankField } from "../utils/SelectBankField";
 
 const ChooseBankUssd = () => {
-    useEffect(()=>{
-        document.querySelector("select#banks").addEventListener('change', event => {
-            document.querySelector("#top-bank-lists").style.display = "none"; 
-            document.querySelector("#proceed-btn-wrapper").style.display = "block"; 
-        })
-    },[])
-
     return (
         <ModalWrapper id="choose-bank-ussd" transferType="ussd">
             <Form>
-                <SelectBankField />
+                <SelectBankField parentModalClass="ussd-modal" />
 
                 <CheckboxField 
                     CheckboxLabel={"Remember this option next time"}

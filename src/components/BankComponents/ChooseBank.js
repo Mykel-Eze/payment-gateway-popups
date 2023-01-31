@@ -9,7 +9,7 @@ const ChooseBank = () => {
     return (
         <ModalWrapper id="choose-bank" transferType="bank">
             <Form>
-                <SelectBankField />
+                <SelectBankField parentModalClass="bank-modal" />
 
                 <CheckboxField 
                     CheckboxLabel={"Remember this option next time"}
