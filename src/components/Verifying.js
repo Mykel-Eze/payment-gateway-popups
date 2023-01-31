@@ -6,7 +6,7 @@ import { Loader, LoaderWrapper, Text } from './styled/Utils.styled';
 const Verifying = () => {
 
     return (
-        <ModalWrapper id="verifying">
+        <ModalWrapper id="verifying" transferType="">
             <Form>
                 <LoaderWrapper className='modal-trigger modal-close' data-target="transaction-completed">
                     <div className="center">

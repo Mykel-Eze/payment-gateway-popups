@@ -6,7 +6,7 @@ import { Text } from './styled/Utils.styled';
 
 const TransactionNotCompleted = () => {
     return (
-        <ModalWrapper id="transaction-not-completed" transferType="card">
+        <ModalWrapper id="transaction-not-completed" transferType="">
             <Form>
                 <div className="center">
                     <img src={require("../images/caution.svg").default} alt="caution" className="caution-img" />

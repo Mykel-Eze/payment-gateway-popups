@@ -14,6 +14,7 @@ import ChooseBankUssd from './components/UssdComponents/ChooseBankUssd';
 import BankUssdDetails from './components/UssdComponents/BankUssdDetails';
 import Verifying from './components/Verifying';
 import ChooseBank from './components/BankComponents/ChooseBank';
+import BankTransferDetails from './components/TransfersComponent/BankTransferDetails';
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
         <div className="main-boxes-wrapper">
           <h1 className='mbw-title'>Payment Gateway Popups</h1>
           <div className="popup-trigger-grid">
-            <div className="popup-trigger-block modal-trigger" data-target="">
+            <div className="popup-trigger-block modal-trigger" data-target="bank-transfer-details">
               <h4 className="bold-txt">Transfer</h4>
             </div>
             <div className="popup-trigger-block modal-trigger" data-target="choose-bank">
@@ -58,6 +59,8 @@ function App() {
       <BankUssdDetails />
 
       <ChooseBank />
+
+      <BankTransferDetails />
     </div>
   );
 }

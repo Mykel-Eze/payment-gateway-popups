@@ -37,7 +37,7 @@ const ModalWrapper = ({ id="", children, transferType}) => {
                 <ModalFooter>
                     <Container>
                         <TransferTypeWrapper>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'transfer' ? 'active' : ''}`} data-target="">
+                            <TransferType className={`modal-trigger modal-close ${transferType === 'transfer' ? 'active' : ''}`} data-target="bank-transfer-details">
                                 <div>
                                     <img src={require("../../images/transfer.svg").default} alt="transfer" className="default-img" />
                                     <img src={require("../../images/transfer-active.svg").default} alt="transfer" className="active-img" />
