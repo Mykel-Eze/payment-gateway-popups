@@ -229,9 +229,50 @@ h1.mbw-title {
 }
 /*---=== end of App Page Styles ===---*/
 
+/*---=== Other Styles ===---*/
 #transaction-completed .tranxn-amount {
     display: none;
 }
+
+.select-wrapper input.select-dropdown {
+    background: #F9F9F9;
+    border: 1px solid rgba(119, 119, 119, 0.2) !important;
+    border-radius: 32.5px !important;
+    color: #353D46;
+    height: 65px !important;
+    box-shadow: none !important;
+    padding: 0 20px !important;
+    font-size: 18px !important;
+    box-sizing: border-box !important;
+}
+.select-wrapper input.select-dropdown:focus:not([readonly]) {
+    border-color: black !important;
+}
+
+.select-wrapper input.select-dropdown:focus:not([readonly])+label {
+    color: black !important;
+}
+.select-wrapper .caret {
+    display: none;
+}
+img.care-icon {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+}
+.dropdown-content.select-dropdown {
+    width: 100% !important;
+}
+.dropdown-content li:not(.disabled) > a, .dropdown-content li:not(.disabled) > span {
+    color: var(--pry-color) !important;
+}
+.toast.success {
+    background-color: #198754;
+}
+.toast.error {
+    background-color: #ff3333;
+}
+/*---=== end of Other Styles ===---*/
 
 @media(min-width: 993px) {
     #root .container {

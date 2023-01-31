@@ -10,6 +10,10 @@ import EnterCardPin from './components/CardComponents/EnterCardPin';
 import TransactionCompleted from './components/TransactionCompleted';
 import TransactionNotCompleted from './components/TransactionNotCompleted';
 
+import ChooseBankUssd from './components/UssdComponents/ChooseBankUssd';
+import BankUssdDetails from './components/UssdComponents/BankUssdDetails';
+import Verifying from './components/Verifying';
+
 function App() {
 
   useEffect(()=> {
@@ -32,7 +36,7 @@ function App() {
             <div className="popup-trigger-block modal-trigger" data-target="enter-card-details">
               <h4 className="bold-txt">Card</h4>
             </div>
-            <div className="popup-trigger-block modal-trigger" data-target="">
+            <div className="popup-trigger-block modal-trigger" data-target="choose-bank-ussd">
               <h4 className="bold-txt">USSD</h4>
             </div>
             <div className="popup-trigger-block modal-trigger" data-target="">
@@ -42,10 +46,15 @@ function App() {
         </div>
       </div>
 
-      <EnterCardDetails />
-      <EnterCardPin />
       <TransactionCompleted />
       <TransactionNotCompleted />
+      <Verifying />
+
+      <EnterCardDetails />
+      <EnterCardPin />
+
+      <ChooseBankUssd />
+      <BankUssdDetails />
     </div>
   );
 }

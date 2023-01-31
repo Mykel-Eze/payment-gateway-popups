@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Form = styled.form `
     position: relative;
+    min-height: 200px;
 `
 
 export const Input = styled.input `

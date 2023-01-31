@@ -12,7 +12,7 @@ export const Button = styled.button `
     cursor: pointer;
     transition: transform 1.2s;
 
-    &:hover {
+    &:not(.pointer):hover {
         transform: scale(1.03);
     }
 
@@ -21,6 +21,20 @@ export const Button = styled.button `
         background-color: #ffffff !important;
         color: #353D46 !important;
         border: 1px solid rgba(119, 119, 119, 0.2) !important;
+    }
+
+    &.default-btn.flex-div {
+        padding: 0 20px
+    }
+
+    b.bold-txt {
+        font-size: 28px;
+    }
+    .copy-notice {
+        position: absolute;
+        top: 25px;
+        right: 20px;
+        font-size: 11px;
     }
 `
 
