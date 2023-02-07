@@ -195,7 +195,7 @@ h1.mbw-title {
 }
 .popup-trigger-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
 }
 .popup-trigger-block {
@@ -212,6 +212,13 @@ h1.mbw-title {
 }
 .modal-trigger {
     cursor: pointer;
+}
+.low-funds .low-funds-notice {
+    display: block;
+    font-size: 18px;
+    font-family: var(--font-medium);
+    color: var(--pry-color);
+    margin-top: 10px;
 }
 
 @media(max-width: 992px) {

@@ -40,6 +40,9 @@ export const Text = styled.div `
         line-height: 26px;
         font-family: var(--font-medium);
     }
+    .gray-txt {
+        color: #979797;
+    }
 `
 
 export const LoaderWrapper = styled.div `
@@ -91,4 +94,13 @@ export const CopyIcon = styled.img `
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
+`
+
+export const WalletBalance = styled.div `
+    font-size: 18px;
+    color: #58A55C;
+
+    &.low-funds {
+        color: #C92135;
+    }
 `
