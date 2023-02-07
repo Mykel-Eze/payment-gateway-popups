@@ -31,10 +31,12 @@ function App() {
         <div className="main-boxes-wrapper">
           <h1 className='mbw-title'>Payment Gateway Popups</h1>
           <div className="popup-trigger-grid">
+            <div></div>
+            <div></div>
             <div className="popup-trigger-block modal-trigger" data-target="pay-with-wallet">
-              <h4 className="bold-txt">Wallet</h4>
+              <h4 className="bold-txt">Pay Now</h4>
             </div>
-            <div className="popup-trigger-block modal-trigger" data-target="bank-transfer-details">
+            {/* <div className="popup-trigger-block modal-trigger" data-target="bank-transfer-details">
               <h4 className="bold-txt">Transfer</h4>
             </div>
             <div className="popup-trigger-block modal-trigger" data-target="choose-bank">
@@ -45,7 +47,7 @@ function App() {
             </div>
             <div className="popup-trigger-block modal-trigger" data-target="choose-bank-ussd">
               <h4 className="bold-txt">USSD</h4>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
