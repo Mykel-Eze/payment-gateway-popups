@@ -4,8 +4,68 @@ import { Button, ButtonWrapper } from "../styled/Button.styled";
 import { Form } from "../styled/Form.styled";
 import ModalWrapper from "../utils/ModalWrapper";
 import { AccountInfo, CopyIcon, InfoBox, Text } from "../styled/Utils.styled";
+import { useFormik } from 'formik'
+import * as Yup from "yup";
+import TransactionCompleted from '../TransactionCompleted';
+import TransactionNotCompleted from '../TransactionNotCompleted';
+import Verifying from '../Verifying';
+import React, { useState } from 'react';
 
-const BankTransferDetails = () => {
+export const ScreenID = {
+    TRANSFER: 'transfer',
+    VERIFY: 'verify',
+    TRANSACTION_COMPLETED: 'transaction_completed',
+    TRANSACTION_NOT_COMPLETED: 'transaction_not_completed',
+}
+
+export const validationSchema = Yup.object().shape({
+    pin: Yup.number().required("Pin is required"),
+})
+
+const BankTransferDetails = ({transaction_details}) => {
+    const {amount} = transaction_details
+
+    const [screen, setScreen] = useState(ScreenID.WALLET);
+
+    const setCardPin = (value) =>{
+        formik.setFieldValue('pin', value)
+    }
+
+    const formik = useFormik({
+		initialValues: {
+			pin: '',	
+		},
+		validationSchema,
+		validateOnChange: false,
+		validateOnBlur: false,
+		onSubmit: (data, { resetForm }) => {
+            console.log("___FORM", data)
+            setScreen(ScreenID.TRANSACTION_NOT_COMPLETED)
+            resetForm()
+		},
+	})
+
+    const retry = () => {
+        setScreen(ScreenID.WALLET)
+    }
+
+    if (screen == ScreenID.VERIFY) {
+        return(
+            <Verifying amount={amount} cardPin={formik.values.pin} setCardPin={setCardPin} onSubmit={formik.handleSubmit} />
+        )
+    }
+
+    if (screen == ScreenID.TRANSACTION_COMPLETED) {
+        return(
+            <TransactionCompleted />
+        )
+    }
+
+    if (screen == ScreenID.TRANSACTION_NOT_COMPLETED) {
+        return(
+            <TransactionNotCompleted retry={retry} />
+        )
+    }
     const CopyToClipboard = (selectedId) => {
         /* Get the text field */
         var copyText = document.getElementById(selectedId);
@@ -20,12 +80,20 @@ const BankTransferDetails = () => {
         /* Alert the copied text */
         M.toast({html: 'Account number copied'})
     }
+
+    const VerifyTransfer = () => {
+        setScreen(ScreenID.VERIFY)
+        setTimeout(function(){
+            setScreen(ScreenID.TRANSACTION_COMPLETED)
+         }, 3000);
+    }
+
     return (
-        <ModalWrapper id="bank-transfer-details" transferType="transfer">
+       
             <Form>
                 <Text className="left-align">
                     <span>
-                        Transfer NGN 35,000,000.09 to  
+                        Transfer NGN {amount} to  
                     </span>
                 </Text>
 
@@ -45,12 +113,15 @@ const BankTransferDetails = () => {
                 </ButtonWrapper>
 
                 <ButtonWrapper>
-                    <Button type="button" className="modal-close modal-trigger" data-target="verifying">
+                    <Button type="button" className="" 
+                        onClick={()=>{
+                            VerifyTransfer()
+                        }}>
                         I have completed payment
                     </Button>
                 </ButtonWrapper>
             </Form>
-        </ModalWrapper>
+        
     )
 }
 

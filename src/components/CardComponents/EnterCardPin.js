@@ -7,12 +7,11 @@ import ModalWrapper from "../utils/ModalWrapper";
 import { PinCodes } from '../styled/PinCodes.styled';
 import { Text } from '../styled/Utils.styled';
 
-const EnterCardPin = () => {
-    const [cardPin, setCardPin] = useState('')
-
+const EnterCardPin = ({cardPin,setCardPin, error, amount, onSubmit}) => {
+  
     return (
-        <ModalWrapper id="enter-card-pin" transferType="card">
-            <Form>
+     
+            <Form onSubmit={onSubmit}>
                 <Text>
                     Enter 4 Digit card PIN to authorize this payement
                 </Text>
@@ -27,13 +26,13 @@ const EnterCardPin = () => {
                     />
                 </PinCodes>
                 <ButtonWrapper>
-                    <Button type="button" className="modal-close modal-trigger" data-target="transaction-not-completed">
-                        Pay ₦35,000,000.09
+                    <Button type="submit">
+                        Pay ₦{amount}
                         <RightArrow src={require("../../images/right-arr.svg").default} />
                     </Button>
                 </ButtonWrapper>
             </Form>
-        </ModalWrapper>
+       
     )
 }
 

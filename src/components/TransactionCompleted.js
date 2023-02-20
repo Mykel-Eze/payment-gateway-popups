@@ -6,7 +6,7 @@ import { Text } from './styled/Utils.styled';
 
 const TransactionCompleted = () => {
     return (
-        <ModalWrapper id="transaction-completed" transferType="">
+       
             <Form>
                 <div className="center">
                     <img src={require("../images/completed.svg").default} alt="completed" className="completed-img" />
@@ -23,7 +23,7 @@ const TransactionCompleted = () => {
                     </Button>
                 </ButtonWrapper>
             </Form>
-        </ModalWrapper>
+       
     )
 }
 
