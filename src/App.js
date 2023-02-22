@@ -19,7 +19,6 @@ import { setScreen } from './store/action';
 function App(prop) {
  
   const { state, dispatch } = useContext(GatewayContext);
-  
   const {transaction_details = {}, wallet={}, screen} = state
 
   useEffect(()=> {
@@ -41,17 +40,30 @@ function App(prop) {
      
     }
 
+    /**
+     * The initial state of the application is set.
+     */
+
     useEffect(()=> {
       dispatch({type: 'reset', payload: {wallet: prop.wallet, transaction_details: prop.transaction_details}})
       loadLocalData()
       }, [prop.transaction_details]);
 
-    const changeScreen = (screen) => {
-     dispatch(setScreen(screen))
-    }
+      /**
+       * Function to handle screen navigation
+       * @param {*} screen 
+       */
 
+      const changeScreen = (screen) => {
+      dispatch(setScreen(screen))
+      }
+
+    /**
+     * The getScreen method serve as the application routing system
+     * @param {*} transaction_details 
+     * @returns Component
+     */
     const getScreen = (transaction_details) => {
-
     return {
 
       [ScreenID.WALLET]:  <PayWithWallet transaction_details={transaction_details} />,
