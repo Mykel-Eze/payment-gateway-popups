@@ -6,17 +6,11 @@ import React, { useContext, useEffect } from 'react';
 import M from 'materialize-css';
 
 import EnterCardDetails from './components/CardComponents/EnterCardDetails';
-import EnterCardPin from './components/CardComponents/EnterCardPin';
-import TransactionCompleted from './components/TransactionCompleted';
-import TransactionNotCompleted from './components/TransactionNotCompleted';
 
 import ChooseBankUssd from './components/UssdComponents/ChooseBankUssd';
-import BankUssdDetails from './components/UssdComponents/BankUssdDetails';
-import Verifying from './components/Verifying';
 import ChooseBank from './components/BankComponents/ChooseBank';
 import BankTransferDetails from './components/TransfersComponent/BankTransferDetails';
 import PayWithWallet from './components/WalletComponents/PayWithWallet';
-import EnterWalletPin from './components/WalletComponents/EnterWalletPin';
 import ModalWrapper from './components/utils/ModalWrapper';
 import { ScreenID } from './constants';
 import { GatewayContext } from './store/provider';
@@ -31,10 +25,25 @@ function App(prop) {
   useEffect(()=> {
     var elemsModal = document.querySelectorAll('.modal');
       M.Modal.init(elemsModal); 
+      
     }, []);
+
+    /**
+     * Function to load data from local storage
+     */
+    const loadLocalData = () => {
+      try {
+        const db = localStorage.getItem('payrail_local_db');
+        dispatch({type: 'payrail_local_db', payload: JSON.parse(db)})
+      } catch (error) {
+        console.log("___ERROR__", error)
+      }
+     
+    }
 
     useEffect(()=> {
       dispatch({type: 'reset', payload: {wallet: prop.wallet, transaction_details: prop.transaction_details}})
+      loadLocalData()
       }, [prop.transaction_details]);
 
     const changeScreen = (screen) => {

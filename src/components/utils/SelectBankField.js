@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import M from 'materialize-css';
 
-export const SelectBankField = ({defaultValue, parentModalClass, items = [], onSelect, value, error="hjgjk" }) =>{
+export const SelectBankField = ({defaultValue, parentModalClass, items = [], onSelect, value, error="" }) =>{
     useEffect(() => {
         var elemSelect = document.querySelectorAll('select');
         M.FormSelect.init(elemSelect);
@@ -19,7 +19,7 @@ export const SelectBankField = ({defaultValue, parentModalClass, items = [], onS
     return(
         
          <div className="input-field select-field rel" >
-         <small className={'error-text'}>{error}</small>
+        
           <select className="select" name="banks" value={value} defaultValue={defaultValue} onChange={onSelect}>
               <option disabled value={"default"}>Choose your Bank</option>
               {
@@ -34,7 +34,7 @@ export const SelectBankField = ({defaultValue, parentModalClass, items = [], onS
               
           </select>
           <img src={require("../../images/caret-down.svg").default} alt="caret" className="care-icon" />
-         
+          <small className={'error-text'}>{error}</small>
       </div>
        
     )

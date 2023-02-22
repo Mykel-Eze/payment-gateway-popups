@@ -11,6 +11,8 @@ import TransactionNotCompleted from '../TransactionNotCompleted';
 import Verifying from '../Verifying';
 import React, { useState } from 'react';
 import BankUssdDetails from "../UssdComponents/BankUssdDetails";
+import { useContext } from "react";
+import { GatewayContext } from "../../store/provider";
 
 export const ScreenID = {
     BANK: 'bank',
@@ -35,42 +37,12 @@ const bankList = [
 
 const ChooseBankUssd = ({transaction_details}) => {
     const {amount} = transaction_details
+    const {state, dispatch, setLocalData} = useContext(GatewayContext);
+    const {payrail_local_db} = state
 
     const [screen, setScreen] = useState(ScreenID.WALLET);
-
-    const setCardPin = (value) =>{
-        formik.setFieldValue('bank', value)
-    }
-
-    const formik = useFormik({
-		initialValues: {
-			bank: 'Providus Bank',
-            rememberMe: false	
-		},
-		validationSchema,
-		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: (data, { resetForm }) => {
-            console.log("___FORM", data)
-            setScreen(ScreenID.BANKUSSD)
-            resetForm()
-		},
-	})
-
-    const formikSubmitPayment = useFormik({
-		initialValues: {
-			bank: 'Providus Bank',
-            rememberMe: false	
-		},
-		validationSchema,
-		validateOnChange: false,
-		validateOnBlur: false,
-		onSubmit: (data, { resetForm }) => {
-            console.log("___FORM", data)
-            setScreen(ScreenID.BANKUSSD)
-            resetForm()
-		},
-	})
+    const [bank, setBank] = useState(payrail_local_db?.favorite_ussd_bank || 'Providus Bank')
+    const [check, setCheck] = useState(false)
 
     const retry = () => {
         setScreen(ScreenID.WALLET)
@@ -89,13 +61,13 @@ const ChooseBankUssd = ({transaction_details}) => {
 
     if (screen == ScreenID.BANKUSSD) {
         return(
-            <BankUssdDetails data={formik.values} amount={amount} chooseAnotherBank={chooseAnotherBank} onSubmit={completePayment} />
+            <BankUssdDetails data={{bank}} amount={amount} chooseAnotherBank={chooseAnotherBank} onSubmit={completePayment} />
         )
     }
 
     if (screen == ScreenID.VERIFY) {
         return(
-            <Verifying amount={amount} cardPin={formik.values.pin} setCardPin={setCardPin} onSubmit={formik.handleSubmit} />
+            <Verifying amount={amount} />
         )
     }
 
@@ -110,41 +82,55 @@ const ChooseBankUssd = ({transaction_details}) => {
             <TransactionNotCompleted retry={retry} />
         )
     }
+
+    const handleSubmit = () => {
+       
+        if (check) {
+            setLocalData({favorite_ussd_bank: bank})
+        }
+        setScreen(ScreenID.BANKUSSD)
+    }
+
     return (
       
-            <Form onSubmit={formik.handleSubmit}>
+            <Form>
                 <SelectBankField 
                     items={bankList} 
                     onSelect={(e)=>{
-                        formik.setFieldValue('bank', e.target.value)
+                        setBank(e.target.value)
                     }}
-                    value={formik.values.bank}
-                    defaultValue={formik.values.bank}
+                    value={bank}
+                    defaultValue={bank}
                     parentModalClass="bank-modal"
                   />
 
                 <CheckboxField 
-                    checked={formik.values.rememberMe}
+                    checked={check}
                     onChange={(e)=>{
                         
-                        formik.setFieldValue('rememberMe', e.target.checked)
+                       setCheck(!check)
                     }}
                     CheckboxLabel={"Remember this option next time"}
                 />
 
-                <ButtonWrapper className="top-bank-lists spaced">
-                    <Button type="submit" className=" default-btn flex-div justify-content-btw">
-                        <span className="bank-name">{formik.values.bank}</span>
+                {
+                     payrail_local_db.favorite_ussd_bank || bank == payrail_local_db?.favorite_ussd_bank ?  <ButtonWrapper className="top-bank-lists spaced">
+                    <Button type="button" className=" default-btn flex-div justify-content-btw" onClick={()=>{
+                         setScreen(ScreenID.BANKUSSD)
+                    }}>
+                        <span className="bank-name">{payrail_local_db?.favorite_ussd_bank}</span>
                         <span className="bank-code">*919#</span>
                     </Button>
-                </ButtonWrapper>
-                
-                <ButtonWrapper className="proceed-btn-wrapper hidden">
-                    <Button type="button" className="modal-close modal-trigger" data-target="bank-ussd-details">
-                        Proceed
-                        <RightArrow src={require("../../images/right-arr.svg").default} />
+                </ButtonWrapper>: null
+                }
+
+                {
+                    !payrail_local_db.favorite_ussd_bank || bank != payrail_local_db?.favorite_ussd_bank ? <ButtonWrapper className="proceed-btn-wrapper ">
+                    <Button type="button" onClick={()=>handleSubmit()}>
+                        Pay <b>₦{amount}</b>
                     </Button>
-                </ButtonWrapper>
+                </ButtonWrapper> : null
+                    }
             </Form>
         
     )

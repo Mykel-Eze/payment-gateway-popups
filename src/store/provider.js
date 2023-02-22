@@ -11,7 +11,8 @@ export const GatewayContext = React.createContext();
     wallet:{
       
     },
-    screen: ScreenID.WALLET
+    screen: ScreenID.WALLET,
+    payrail_local_db:{}
   };
   
   function reducer(state, action) {
@@ -21,8 +22,10 @@ export const GatewayContext = React.createContext();
         return { count: state.count + 1 };
       case 'screen':
         return { ...state, screen: action.payload};
+      case 'payrail_local_db':
+        return { ...state, payrail_local_db:{...state.payrail_local_db, ...action.payload}};
       case 'reset':
-        return { ...state, ...action.payload};
+          return { ...state, ...action.payload};
       default:
         return {...state}
     }
@@ -30,8 +33,23 @@ export const GatewayContext = React.createContext();
 
   export default function GatewayProvider(props) {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    /**
+     * This function update local storage state for payrail
+     * @param {object} payload 
+     */
+    const setLocalData = (payload) => {
+
+      try {
+        localStorage.setItem('payrail_local_db', JSON.stringify({...state.payrail_local_db, ...payload}));
+        dispatch({type: 'payrail_local_db', payload})
+      } catch (error) {
+        console.log('__Error setting payrail_local_db',error)
+      }
+
+    }
     return (
-      <GatewayContext.Provider value={{ state, dispatch }}>
+      <GatewayContext.Provider value={{ state, dispatch, setLocalData }}>
         {props.children}
       </GatewayContext.Provider>
     );
