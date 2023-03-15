@@ -1,9 +1,9 @@
 import { CheckboxFieldLabel, Input, Label } from "../styled/Form.styled";
 
-export const InputField = ({type, id ="", classname, label, placeholder, pattern}) =>{
+export const InputField = ({type, id ="", classname, label, placeholder, pattern, ...otherprop}) =>{
     return(
         <div className={`${classname.div}`} id={id.div}>
-            <Input id={id.input} type={type} className={`${classname.input}`} name={id.input} placeholder={placeholder} pattern={pattern}></Input>
+            <Input id={id.input} type={type} className={`${classname.input}`} name={id.input} placeholder={placeholder} pattern={pattern} {...otherprop}></Input>
             <Label htmlFor={id.input} className={`${classname.label}`}>{label}</Label>
         </div>
     )

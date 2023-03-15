@@ -38,6 +38,11 @@ export const Button = styled.button `
         right: 20px;
         font-size: 11px;
     }
+
+    &[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 `
 
 export const ButtonWrapper = styled.div `
