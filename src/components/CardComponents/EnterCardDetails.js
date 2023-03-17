@@ -3,7 +3,7 @@ import { Button, RightArrow, ButtonWrapper } from "../styled/Button.styled";
 import { Form, GridField } from "../styled/Form.styled";
 import { CheckboxField, InputField } from "../utils/InputField";
 import ModalWrapper from "../utils/ModalWrapper";
-
+import axios from 'axios';
 import { useFormik } from 'formik'
 import * as Yup from "yup";
 import TransactionCompleted from '../TransactionCompleted';
@@ -32,13 +32,6 @@ export const ScreenID = {
     rememberMe: Yup.bool(),
 })
 
-const bankList = [
-    {label: 'Guaranty Trust Bank', value: 'Guaranty Trust Bank', code: '737'},
-    {label: 'United Bank for Africa', value: 'United Bank for Africa', code: '770'},
-    {label: 'Union Bank', value: 'Union Bank', code: '678'},
-    {label: 'Wema Bank', value: 'Wema Bank', code: '945'},
-    {label: 'Providus Bank', value: 'Providus Bank', code: '483'},
-]
 
 const EnterCardDetails = ({transaction_details}) => {
   
@@ -74,9 +67,88 @@ const EnterCardDetails = ({transaction_details}) => {
 		validationSchema,
 		validateOnChange: false,
 		validateOnBlur: false,
-		onSubmit: (data, { resetForm }) => {
+		onSubmit: async (data, { resetForm })  => {
             console.log("___FORM", data)
-            setScreen(ScreenID.CARD_PIN)
+
+            const {card_number,card_expiry_date,cvv, rememberMe,} = data
+            const dateArr = card_expiry_date.split('/');
+            const body = {
+                card_number,
+                security_code: cvv,
+                expiry_month: dateArr[0],
+                expiry_year: dateArr[1],
+                trx_amount: amount,
+                browser: window.navigator.userAgent,
+                responseUrl:  'https://cu76xsumvh.execute-api.eu-central-1.amazonaws.com/default/EmvResponse',
+            };
+
+            console.log("___FORM BODY___", body);
+
+            try {
+                setScreen(ScreenID.VERIFY)
+                let childWindow = window.open('', '_blank');
+                
+               const res = await axios.put('http://localhost:3000/dev/initiate/authentication',body,{
+                 
+                    headers: {
+                        "Content-Type": "application/json;charset=utf-8",
+                        'Access-Control-Allow-Origin': '*'
+                      },
+                });
+              
+                    const {authentication} = res.data
+                    const {redirectHtml, redirect, version} = authentication
+
+                    let authUrl = redirectHtml
+
+                    if (!authUrl) {
+                        authUrl = redirect.html
+                    }
+                   
+                    let iframe = childWindow.document.createElement('iframe');
+                    iframe.setAttribute('srcdoc', authUrl);
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.zIndex = '9999';
+                    childWindow.document.body.appendChild(iframe);
+
+                    window.addEventListener('load', function(event) {
+                       console.log("___EVENT__2",event)
+                        let message = {
+                            type: '3DS_challenge_response',
+                            data: 'response_data_here'
+                          };
+                        window.parent.postMessage(message, '*');
+                      });
+
+                      window.addEventListener('message', function(event) {
+                        console.log("___EVENT__",event)
+                        console.log("___ORIGIN__",event.origin)
+                        console.log("___TYPE__",event.data.type)
+                        console.log("___DATA__",event.data)
+                        console.log("___DATA__2",event.data.data)
+
+                        // if (event.origin !== childWindow.origin) return;
+                        if (event.data.type === '3DS_challenge_response') {
+                          let responseData = event.data.data;
+                         
+                          // Handle the response data here
+                          console.log('____RESPONSE__2_', responseData);
+
+                        }
+                        
+                      });
+
+              
+               
+               
+            } catch (error) {
+                console.log('____ERROR___', error)
+            }
+            
+            
             resetForm()
 		},
 	})

@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
       first_name: "Toyeeb",
       last_name: "Atunde",
       amount: 100000,
+      currency: 'NGN'
 
   },
   wallet:{

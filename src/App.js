@@ -2,7 +2,7 @@ import './css/styles.css'
 import './css/fonts.css'
 import 'materialize-css/dist/css/materialize.min.css';
 import PropTypes from "prop-types";
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import M from 'materialize-css';
 
 import EnterCardDetails from './components/CardComponents/EnterCardDetails';
@@ -20,6 +20,8 @@ function App(prop) {
  
   const { state, dispatch } = useContext(GatewayContext);
   const {transaction_details = {}, wallet={}, screen} = state
+  const [email, setEmail] = useState('');
+  const [amount, setAmount] = useState(0); 
 
   useEffect(()=> {
     var elemsModal = document.querySelectorAll('.modal');
@@ -48,6 +50,12 @@ function App(prop) {
       dispatch({type: 'reset', payload: {wallet: prop.wallet, transaction_details: prop.transaction_details}})
       loadLocalData()
       }, [prop.transaction_details]);
+
+      const Pay = () =>{
+        dispatch({type: 'reset', payload: {wallet: prop.wallet, transaction_details: {...prop.transaction_details, email, amount}}})
+        const payBtnModal = document.querySelector('#gateway-modal');
+        M.Modal.getInstance(payBtnModal).open();
+      }
 
       /**
        * Function to handle screen navigation
@@ -83,10 +91,45 @@ function App(prop) {
           <h1 className='mbw-title'>Payment Gateway Popups</h1>
           <div className="popup-trigger-grid">
             <div></div>
-            <div></div>
-            <div className="popup-trigger-block modal-trigger" data-target="gateway-modal">
+            <div>
+              <label>Amount</label>
+            <input  value={amount} onChange={(e)=>{
+                    setAmount(e.target.value)
+            }} />
+             <label>Email</label>
+            <input value={email} onChange={(e)=>{
+              setEmail(e.target.value)
+            }} />
+            </div>
+           
+            <div className="popup-trigger-block modal-trigger" onClick={()=>Pay()}>
               <h4 className="bold-txt">Pay Now</h4>
             </div>
+
+            <button onClick={()=>{
+console.log('__', )
+              let childWindow = window.open('', '_blank');
+              let iframe = childWindow.document.createElement('iframe');
+              iframe.setAttribute('srcdoc', "<div id=\"threedsChallengeRedirect\" xmlns=\"http://www.w3.org/1999/html\"style=\" height: 100vh\"> <form id =\"threedsChallengeRedirectForm\" method=\"POST\" action=\"https://authentication.cardinalcommerce.com/ThreeDSecure/V2_1_0/CReq\" target=\"challengeFrame\"> <input type=\"hidden\" name=\"creq\" value=\"eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6IjAzMjM5Y2JhLTJjM2YtNDAzZC1hZjExLTYxODg2YWJkZTIyMyIsImFjc1RyYW5zSUQiOiI0ZGYxYmM3My03YTdhLTRhNzQtODA2NS1mODI5YmJhNzM3ZGYiLCJjaGFsbGVuZ2VXaW5kb3dTaXplIjoiMDUiLCJtZXNzYWdlVHlwZSI6IkNSZXEiLCJtZXNzYWdlVmVyc2lvbiI6IjIuMS4wIn0\" /> </form> <iframe id=\"challengeFrame\" name=\"challengeFrame\" width=\"100%\" height=\"100%\" ></iframe> <script id=\"authenticate-payer-script\"> var e=document.getElementById(\"threedsChallengeRedirectForm\"); if (e) { e.submit(); if (e.parentNode !== null) { e.parentNode.removeChild(e); } } </script> </div>");
+              childWindow.document.body.appendChild(iframe);
+
+              window.addEventListener('load', function() {
+                let message = {
+                  type: '3DS_challenge_response',
+                  data: 'response_data_here'
+                };
+                window.parent.postMessage(message, '*');
+              });
+
+              window.addEventListener('message', function(event) {
+                if (event.origin !== childWindow.origin) return;
+                if (event.data.type === '3DS_challenge_response') {
+                  let responseData = event.data.data;
+                  // Handle the response data here
+                }
+              });
+              
+            }}>test iframe</button>
 
           </div>
         </div>
