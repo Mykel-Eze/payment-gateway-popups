@@ -3,11 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import GatewayProvider from './store/provider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+ const initialState = {
+ 
+  transaction_details: {
+      email: "atundearisekola@gmail.com",
+      first_name: "Toyeeb",
+      last_name: "Atunde",
+      amount: 100000,
+      currency: 'NGN'
+
+  },
+  wallet:{
+      balance: 500000
+  },
+};
 root.render(
   <React.StrictMode>
-    <App />
+    <GatewayProvider>
+      <App transaction_details={initialState.transaction_details} wallet={initialState.wallet} />
+    </GatewayProvider>
   </React.StrictMode>
 );
 

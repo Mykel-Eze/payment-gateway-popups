@@ -1,12 +1,17 @@
+import { ScreenID } from "../../constants";
 import { Modal, CloseModal, ModalContent, ModalBody } from "../styled/Modal.styled";
 import { ModalFooter, TransferType, TransferTypeWrapper } from "../styled/ModalFooter.styled";
 import { ModalHeader, SecuredNotice, ModalTopDetails, BusinessLogo, TransactionDetials } from "../styled/ModalHeader.styled"
 import { Container, Flex, WalletBalance } from "../styled/Utils.styled";
+import TabButton from "../TabButton";
 
-const ModalWrapper = ({ id="", children, transferType, walletBalanceAmount=""}) => {
-    const TransactionAmount = 100000;
+const ModalWrapper = ({ id="modal", children, screen, setScreen, wallet={}, transaction_details={}}) => {
+    console.log("___1", transaction_details)
+    const {balance} = wallet
+    const {amount, email, first_name} = transaction_details
+   
     return (
-        <Modal id={id} className={`modal ${transferType}-modal ${TransactionAmount > walletBalanceAmount ? 'low-funds' : ''}`}>
+        <Modal id={id} className={`modal gateway-modal ${amount > balance ? 'low-funds' : ''}`}>
             <CloseModal src={require("../../images/close-popup.svg").default} alt="close modal" className="modal-close" />    
 
             <ModalBody>
@@ -21,9 +26,9 @@ const ModalWrapper = ({ id="", children, transferType, walletBalanceAmount=""}) 
                             <Flex>
                                 <BusinessLogo src={require("../../images/default-avatar.png")} alt="business-logo" />
                                 <TransactionDetials>
-                                    {transferType === 'wallet' ? <WalletBalance className={TransactionAmount > walletBalanceAmount ? 'low-funds' : ''}>Wallet Balance: ₦500,000.69</WalletBalance> : null}
-                                    <div className="tranxn-amount"><small>₦</small>35,000,000.09</div>
-                                    <div className="tranxn-user-email">user@company.com</div>
+                                    {screen === 'wallet' ? <WalletBalance className={amount > balance ? 'low-funds' : ''}>Wallet Balance: {` ₦${balance}`}</WalletBalance> : null}
+                                    <div className="tranxn-amount"><small>₦</small>{amount}</div>
+                                    <div className="tranxn-user-email">{email}</div>
                                 </TransactionDetials>
                             </Flex>
                         </Container>
@@ -39,41 +44,59 @@ const ModalWrapper = ({ id="", children, transferType, walletBalanceAmount=""}) 
                 <ModalFooter>
                     <Container>
                         <TransferTypeWrapper>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'wallet' ? 'active' : ''}`} data-target="pay-with-wallet">
-                                <div>
-                                    <img src={require("../../images/wallet.svg").default} alt="wallet" className="default-img" />
-                                    <img src={require("../../images/wallet-active.svg").default} alt="wallet" className="active-img" />
-                                </div>
-                                <div>Wallet</div>
-                            </TransferType>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'transfer' ? 'active' : ''}`} data-target="bank-transfer-details">
-                                <div>
-                                    <img src={require("../../images/transfer.svg").default} alt="transfer" className="default-img" />
-                                    <img src={require("../../images/transfer-active.svg").default} alt="transfer" className="active-img" />
-                                </div>
-                                <div>Transfer</div>
-                            </TransferType>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'bank' ? 'active' : ''}`} data-target="choose-bank">
-                                <div>
-                                    <img src={require("../../images/bank.svg").default} alt="bank" className="default-img" />
-                                    <img src={require("../../images/bank-active.svg").default} alt="bank" className="active-img" />
-                                </div>
-                                <div>Bank</div>
-                            </TransferType>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'card' ? 'active' : ''}`} data-target="enter-card-details">
-                                <div>
-                                    <img src={require("../../images/card.svg").default} alt="card" className="default-img" />
-                                    <img src={require("../../images/card-active.svg").default} alt="card" className="active-img" />
-                                </div>
-                                <div>Card</div>
-                            </TransferType>
-                            <TransferType className={`modal-trigger modal-close ${transferType === 'ussd' ? 'active' : ''}`} data-target="choose-bank-ussd">
-                                <div>
-                                    <img src={require("../../images/ussd.svg").default} alt="ussd" className="default-img" />
-                                    <img src={require("../../images/ussd-active.svg").default} alt="ussd" className="active-img" />
-                                </div>
-                                <div>USSD</div>
-                            </TransferType>
+                            <TabButton 
+                                label={"Wallet"} 
+                                active={screen === ScreenID.WALLET} 
+                                inActiveIcon={require("../../images/wallet.svg").default}
+                                activeIcon={require("../../images/wallet-active.svg").default}
+                                onClick={()=>{
+                                    setScreen(ScreenID.WALLET)
+                                }}
+                                target="pay-with-wallet"
+                             />
+                             <TabButton 
+                                label={"Transfer"} 
+                                active={screen === ScreenID.TRANSFER} 
+                                inActiveIcon={require("../../images/transfer.svg").default}
+                                activeIcon={require("../../images/transfer-active.svg").default}
+                                target="bank-transfer-details"
+                                onClick={()=>{
+                                    setScreen(ScreenID.TRANSFER)
+                                }}
+                             />
+                             <TabButton 
+                                label={"Bank"} 
+                                active={screen === ScreenID.BANK} 
+                                inActiveIcon={require("../../images/bank.svg").default}
+                                activeIcon={require("../../images/bank-active.svg").default}
+                                target="choose-bank"
+                                onClick={()=>{
+                                    setScreen(ScreenID.BANK)
+                                }}
+                             />
+
+                              <TabButton 
+                                label={"Card"} 
+                                active={screen === ScreenID.CARD} 
+                                inActiveIcon={require("../../images/card.svg").default}
+                                activeIcon={require("../../images/card-active.svg").default}
+                                target="enter-card-details"
+                                onClick={()=>{
+                                    setScreen(ScreenID.CARD)
+                                }}
+                             />
+
+                              <TabButton 
+                                label={"USSD"} 
+                                active={screen === ScreenID.USSD} 
+                                inActiveIcon={require("../../images/ussd.svg").default}
+                                activeIcon={require("../../images/ussd-active.svg").default}
+                                target="choose-bank-ussd"
+                                onClick={()=>{
+                                    setScreen(ScreenID.USSD)
+                                }}
+                             />
+                            
                         </TransferTypeWrapper>
                     </Container>
                 </ModalFooter>

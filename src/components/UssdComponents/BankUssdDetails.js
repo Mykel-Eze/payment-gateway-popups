@@ -5,7 +5,7 @@ import { Form } from "../styled/Form.styled";
 import ModalWrapper from "../utils/ModalWrapper";
 import { Text } from "../styled/Utils.styled";
 
-const BankUssdDetails = () => {
+const BankUssdDetails = ({data, amount, chooseAnotherBank, onSubmit}) => {
     const CopyToClipboard = (selectedId) => {
         /* Get the text field */
         var copyText = document.getElementById(selectedId);
@@ -21,7 +21,7 @@ const BankUssdDetails = () => {
         M.toast({html: 'USSD code copied'})
     }
     return (
-        <ModalWrapper id="bank-ussd-details" transferType="ussd">
+     
             <Form>
                 <Text>
                     <span>
@@ -38,18 +38,18 @@ const BankUssdDetails = () => {
                 </ButtonWrapper>
 
                 <ButtonWrapper>
-                    <Button type="button" className="modal-close modal-trigger" data-target="verifying">
+                    <Button type="button" onClick={onSubmit}>
                         I have completed payment
                     </Button>
                 </ButtonWrapper>
 
                 <Text>
-                    <div className="modal-close modal-trigger" data-target="choose-bank-ussd">
+                    <div className="modal-trigger" onClick={chooseAnotherBank}>
                         <u>Choose another bank</u>
                     </div>
                 </Text>
             </Form>
-        </ModalWrapper>
+       
     )
 }
 
